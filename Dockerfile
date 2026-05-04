@@ -2,7 +2,6 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-# Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     libmagic1 libmagic-dev \
@@ -10,9 +9,10 @@ RUN apt-get update && apt-get install -y \
 
 COPY . /app/
 
-RUN pip install --upgrade pip setuptools wheel
+RUN pip install --upgrade pip wheel
 RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir setuptools
 
 EXPOSE 8000
 
-CMD ["bash", "start.sh"]
+ENTRYPOINT ["bash", "start.sh"]
